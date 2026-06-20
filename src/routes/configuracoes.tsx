@@ -6,10 +6,10 @@ export const Route = createFileRoute("/configuracoes")({
   component: ConfigLayout,
 });
 
-const tabs = [
+const tabs: { to: "/configuracoes" | "/configuracoes/providers"; label: string; exact?: boolean }[] = [
   { to: "/configuracoes", label: "Geral", exact: true },
   { to: "/configuracoes/providers", label: "Provedores" },
-] as const;
+];
 
 function ConfigLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });

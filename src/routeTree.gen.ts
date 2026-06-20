@@ -9,38 +9,324 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as ReunioesRouteImport } from './routes/reunioes'
+import { Route as ProjetosRouteImport } from './routes/projetos'
+import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EvolucaoRouteImport } from './routes/evolucao'
+import { Route as ConhecimentoRouteImport } from './routes/conhecimento'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as ChatRouteImport } from './routes/chat'
+import { Route as ArquivoRouteImport } from './routes/arquivo'
+import { Route as AprendizadoRouteImport } from './routes/aprendizado'
+import { Route as AgentesRouteImport } from './routes/agentes'
+import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConfiguracoesIndexRouteImport } from './routes/configuracoes.index'
+import { Route as ConfiguracoesProvidersRouteImport } from './routes/configuracoes.providers'
 
+const SkillsRoute = SkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReunioesRoute = ReunioesRouteImport.update({
+  id: '/reunioes',
+  path: '/reunioes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetosRoute = ProjetosRouteImport.update({
+  id: '/projetos',
+  path: '/projetos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InboxRoute = InboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvolucaoRoute = EvolucaoRouteImport.update({
+  id: '/evolucao',
+  path: '/evolucao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConhecimentoRoute = ConhecimentoRouteImport.update({
+  id: '/conhecimento',
+  path: '/conhecimento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArquivoRoute = ArquivoRouteImport.update({
+  id: '/arquivo',
+  path: '/arquivo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AprendizadoRoute = AprendizadoRouteImport.update({
+  id: '/aprendizado',
+  path: '/aprendizado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentesRoute = AgentesRouteImport.update({
+  id: '/agentes',
+  path: '/agentes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendaRoute = AgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfiguracoesIndexRoute = ConfiguracoesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConfiguracoesRoute,
+} as any)
+const ConfiguracoesProvidersRoute = ConfiguracoesProvidersRouteImport.update({
+  id: '/providers',
+  path: '/providers',
+  getParentRoute: () => ConfiguracoesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/agentes': typeof AgentesRoute
+  '/aprendizado': typeof AprendizadoRoute
+  '/arquivo': typeof ArquivoRoute
+  '/chat': typeof ChatRoute
+  '/configuracoes': typeof ConfiguracoesRouteWithChildren
+  '/conhecimento': typeof ConhecimentoRoute
+  '/evolucao': typeof EvolucaoRoute
+  '/favoritos': typeof FavoritosRoute
+  '/inbox': typeof InboxRoute
+  '/projetos': typeof ProjetosRoute
+  '/reunioes': typeof ReunioesRoute
+  '/skills': typeof SkillsRoute
+  '/configuracoes/providers': typeof ConfiguracoesProvidersRoute
+  '/configuracoes/': typeof ConfiguracoesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/agentes': typeof AgentesRoute
+  '/aprendizado': typeof AprendizadoRoute
+  '/arquivo': typeof ArquivoRoute
+  '/chat': typeof ChatRoute
+  '/conhecimento': typeof ConhecimentoRoute
+  '/evolucao': typeof EvolucaoRoute
+  '/favoritos': typeof FavoritosRoute
+  '/inbox': typeof InboxRoute
+  '/projetos': typeof ProjetosRoute
+  '/reunioes': typeof ReunioesRoute
+  '/skills': typeof SkillsRoute
+  '/configuracoes/providers': typeof ConfiguracoesProvidersRoute
+  '/configuracoes': typeof ConfiguracoesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/agentes': typeof AgentesRoute
+  '/aprendizado': typeof AprendizadoRoute
+  '/arquivo': typeof ArquivoRoute
+  '/chat': typeof ChatRoute
+  '/configuracoes': typeof ConfiguracoesRouteWithChildren
+  '/conhecimento': typeof ConhecimentoRoute
+  '/evolucao': typeof EvolucaoRoute
+  '/favoritos': typeof FavoritosRoute
+  '/inbox': typeof InboxRoute
+  '/projetos': typeof ProjetosRoute
+  '/reunioes': typeof ReunioesRoute
+  '/skills': typeof SkillsRoute
+  '/configuracoes/providers': typeof ConfiguracoesProvidersRoute
+  '/configuracoes/': typeof ConfiguracoesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agenda'
+    | '/agentes'
+    | '/aprendizado'
+    | '/arquivo'
+    | '/chat'
+    | '/configuracoes'
+    | '/conhecimento'
+    | '/evolucao'
+    | '/favoritos'
+    | '/inbox'
+    | '/projetos'
+    | '/reunioes'
+    | '/skills'
+    | '/configuracoes/providers'
+    | '/configuracoes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agenda'
+    | '/agentes'
+    | '/aprendizado'
+    | '/arquivo'
+    | '/chat'
+    | '/conhecimento'
+    | '/evolucao'
+    | '/favoritos'
+    | '/inbox'
+    | '/projetos'
+    | '/reunioes'
+    | '/skills'
+    | '/configuracoes/providers'
+    | '/configuracoes'
+  id:
+    | '__root__'
+    | '/'
+    | '/agenda'
+    | '/agentes'
+    | '/aprendizado'
+    | '/arquivo'
+    | '/chat'
+    | '/configuracoes'
+    | '/conhecimento'
+    | '/evolucao'
+    | '/favoritos'
+    | '/inbox'
+    | '/projetos'
+    | '/reunioes'
+    | '/skills'
+    | '/configuracoes/providers'
+    | '/configuracoes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgendaRoute: typeof AgendaRoute
+  AgentesRoute: typeof AgentesRoute
+  AprendizadoRoute: typeof AprendizadoRoute
+  ArquivoRoute: typeof ArquivoRoute
+  ChatRoute: typeof ChatRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRouteWithChildren
+  ConhecimentoRoute: typeof ConhecimentoRoute
+  EvolucaoRoute: typeof EvolucaoRoute
+  FavoritosRoute: typeof FavoritosRoute
+  InboxRoute: typeof InboxRoute
+  ProjetosRoute: typeof ProjetosRoute
+  ReunioesRoute: typeof ReunioesRoute
+  SkillsRoute: typeof SkillsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/skills': {
+      id: '/skills'
+      path: '/skills'
+      fullPath: '/skills'
+      preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reunioes': {
+      id: '/reunioes'
+      path: '/reunioes'
+      fullPath: '/reunioes'
+      preLoaderRoute: typeof ReunioesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projetos': {
+      id: '/projetos'
+      path: '/projetos'
+      fullPath: '/projetos'
+      preLoaderRoute: typeof ProjetosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inbox': {
+      id: '/inbox'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof InboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evolucao': {
+      id: '/evolucao'
+      path: '/evolucao'
+      fullPath: '/evolucao'
+      preLoaderRoute: typeof EvolucaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conhecimento': {
+      id: '/conhecimento'
+      path: '/conhecimento'
+      fullPath: '/conhecimento'
+      preLoaderRoute: typeof ConhecimentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/arquivo': {
+      id: '/arquivo'
+      path: '/arquivo'
+      fullPath: '/arquivo'
+      preLoaderRoute: typeof ArquivoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aprendizado': {
+      id: '/aprendizado'
+      path: '/aprendizado'
+      fullPath: '/aprendizado'
+      preLoaderRoute: typeof AprendizadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agentes': {
+      id: '/agentes'
+      path: '/agentes'
+      fullPath: '/agentes'
+      preLoaderRoute: typeof AgentesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agenda': {
+      id: '/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AgendaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +334,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/configuracoes/': {
+      id: '/configuracoes/'
+      path: '/'
+      fullPath: '/configuracoes/'
+      preLoaderRoute: typeof ConfiguracoesIndexRouteImport
+      parentRoute: typeof ConfiguracoesRoute
+    }
+    '/configuracoes/providers': {
+      id: '/configuracoes/providers'
+      path: '/providers'
+      fullPath: '/configuracoes/providers'
+      preLoaderRoute: typeof ConfiguracoesProvidersRouteImport
+      parentRoute: typeof ConfiguracoesRoute
+    }
   }
 }
 
+interface ConfiguracoesRouteChildren {
+  ConfiguracoesProvidersRoute: typeof ConfiguracoesProvidersRoute
+  ConfiguracoesIndexRoute: typeof ConfiguracoesIndexRoute
+}
+
+const ConfiguracoesRouteChildren: ConfiguracoesRouteChildren = {
+  ConfiguracoesProvidersRoute: ConfiguracoesProvidersRoute,
+  ConfiguracoesIndexRoute: ConfiguracoesIndexRoute,
+}
+
+const ConfiguracoesRouteWithChildren = ConfiguracoesRoute._addFileChildren(
+  ConfiguracoesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgendaRoute: AgendaRoute,
+  AgentesRoute: AgentesRoute,
+  AprendizadoRoute: AprendizadoRoute,
+  ArquivoRoute: ArquivoRoute,
+  ChatRoute: ChatRoute,
+  ConfiguracoesRoute: ConfiguracoesRouteWithChildren,
+  ConhecimentoRoute: ConhecimentoRoute,
+  EvolucaoRoute: EvolucaoRoute,
+  FavoritosRoute: FavoritosRoute,
+  InboxRoute: InboxRoute,
+  ProjetosRoute: ProjetosRoute,
+  ReunioesRoute: ReunioesRoute,
+  SkillsRoute: SkillsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
