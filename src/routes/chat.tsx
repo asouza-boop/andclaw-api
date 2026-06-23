@@ -38,7 +38,7 @@ function ChatPage() {
 
   useEffect(() => {
     if (!activeFromUrl && conversations[0]?.id) {
-      navigate({ search: (p) => ({ ...p, c: conversations[0].id }), replace: true });
+      navigate({ search: (p: Record<string, unknown>) => ({ ...p, c: conversations[0].id }), replace: true });
     }
   }, [activeFromUrl, conversations, navigate]);
 
@@ -82,7 +82,7 @@ function ChatPage() {
     mutationFn: () => createFn({ data: { title: "Nova conversa" } }),
     onSuccess: (row) => {
       qc.invalidateQueries({ queryKey: ["conversations"] });
-      navigate({ search: (p) => ({ ...p, c: row.id, m: undefined }) });
+      navigate({ search: (p: Record<string, unknown>) => ({ ...p, c: row.id, m: undefined }) });
     },
   });
 
@@ -90,7 +90,7 @@ function ChatPage() {
     mutationFn: (id: string) => delFn({ data: { id } }),
     onSuccess: (_d, id) => {
       qc.invalidateQueries({ queryKey: ["conversations"] });
-      if (activeId === id) navigate({ search: (p) => ({ ...p, c: undefined, m: undefined }) });
+      if (activeId === id) navigate({ search: (p: Record<string, unknown>) => ({ ...p, c: undefined, m: undefined }) });
     },
   });
 
@@ -120,7 +120,7 @@ function ChatPage() {
             {conversations.map((c) => (
               <li key={c.id} className="group flex items-center gap-1">
                 <button
-                  onClick={() => navigate({ search: (p) => ({ ...p, c: c.id, m: undefined }) })}
+                  onClick={() => navigate({ search: (p: Record<string, unknown>) => ({ ...p, c: c.id, m: undefined }) })}
                   className={`flex-1 min-w-0 flex items-center gap-2 px-2 py-2 rounded-md text-sm text-left ${c.id === activeId ? "bg-primary-soft text-primary" : "hover:bg-overlay"}`}
                 >
                   <MessageSquare size={14} className="flex-shrink-0" />
