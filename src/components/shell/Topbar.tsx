@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { Search, Bell, Command } from "lucide-react";
+import { SearchPalette } from "./SearchPalette";
 
 const titles: Record<string, string> = {
   "/": "Dashboard",
@@ -22,6 +24,18 @@ const titles: Record<string, string> = {
 export function Topbar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const title = titles[pathname] ?? "AndClaw";
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    function handler(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    }
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
 
   return (
     <header className="h-14 flex items-center justify-between gap-4 px-5 md:px-8 border-b border-border glass">
@@ -30,13 +44,22 @@ export function Topbar() {
         <span className="text-xs text-muted-foreground hidden sm:inline">/ workspace</span>
       </div>
       <div className="flex items-center gap-2">
-        <div className="hidden md:flex items-center gap-2 h-9 px-3 rounded-lg bg-surface/60 border border-border w-72 text-sm text-muted-foreground">
+        <button
+          onClick={() => setSearchOpen(true)}
+          className="hidden md:flex items-center gap-2 h-9 px-3 rounded-lg bg-surface/60 border border-border w-72 text-sm text-muted-foreground hover:bg-overlay transition"
+        >
           <Search size={14} />
-          <span className="flex-1">Buscar ou comando…</span>
+          <span className="flex-1 text-left">Buscar ou comando…</span>
           <kbd className="text-[10px] inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-overlay border border-border">
             <Command size={10} />K
           </kbd>
-        </div>
+        </button>
+        <button
+          onClick={() => setSearchOpen(true)}
+          className="md:hidden h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-overlay"
+        >
+          <Search size={15} />
+        </button>
         <button className="relative h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-overlay transition-colors">
           <Bell size={15} />
           <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
@@ -45,6 +68,7 @@ export function Topbar() {
           AS
         </div>
       </div>
+      <SearchPalette open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }
