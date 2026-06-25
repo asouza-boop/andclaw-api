@@ -24,6 +24,7 @@ import { Route as AgentesRouteImport } from './routes/agentes'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConfiguracoesIndexRouteImport } from './routes/configuracoes.index'
+import { Route as ReunioesIdRouteImport } from './routes/reunioes.$id'
 import { Route as ConfiguracoesProvidersRouteImport } from './routes/configuracoes.providers'
 
 const SkillsRoute = SkillsRouteImport.update({
@@ -101,6 +102,11 @@ const ConfiguracoesIndexRoute = ConfiguracoesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ConfiguracoesRoute,
 } as any)
+const ReunioesIdRoute = ReunioesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ReunioesRoute,
+} as any)
 const ConfiguracoesProvidersRoute = ConfiguracoesProvidersRouteImport.update({
   id: '/providers',
   path: '/providers',
@@ -120,9 +126,10 @@ export interface FileRoutesByFullPath {
   '/favoritos': typeof FavoritosRoute
   '/inbox': typeof InboxRoute
   '/projetos': typeof ProjetosRoute
-  '/reunioes': typeof ReunioesRoute
+  '/reunioes': typeof ReunioesRouteWithChildren
   '/skills': typeof SkillsRoute
   '/configuracoes/providers': typeof ConfiguracoesProvidersRoute
+  '/reunioes/$id': typeof ReunioesIdRoute
   '/configuracoes/': typeof ConfiguracoesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -137,9 +144,10 @@ export interface FileRoutesByTo {
   '/favoritos': typeof FavoritosRoute
   '/inbox': typeof InboxRoute
   '/projetos': typeof ProjetosRoute
-  '/reunioes': typeof ReunioesRoute
+  '/reunioes': typeof ReunioesRouteWithChildren
   '/skills': typeof SkillsRoute
   '/configuracoes/providers': typeof ConfiguracoesProvidersRoute
+  '/reunioes/$id': typeof ReunioesIdRoute
   '/configuracoes': typeof ConfiguracoesIndexRoute
 }
 export interface FileRoutesById {
@@ -156,9 +164,10 @@ export interface FileRoutesById {
   '/favoritos': typeof FavoritosRoute
   '/inbox': typeof InboxRoute
   '/projetos': typeof ProjetosRoute
-  '/reunioes': typeof ReunioesRoute
+  '/reunioes': typeof ReunioesRouteWithChildren
   '/skills': typeof SkillsRoute
   '/configuracoes/providers': typeof ConfiguracoesProvidersRoute
+  '/reunioes/$id': typeof ReunioesIdRoute
   '/configuracoes/': typeof ConfiguracoesIndexRoute
 }
 export interface FileRouteTypes {
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/reunioes'
     | '/skills'
     | '/configuracoes/providers'
+    | '/reunioes/$id'
     | '/configuracoes/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/reunioes'
     | '/skills'
     | '/configuracoes/providers'
+    | '/reunioes/$id'
     | '/configuracoes'
   id:
     | '__root__'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '/reunioes'
     | '/skills'
     | '/configuracoes/providers'
+    | '/reunioes/$id'
     | '/configuracoes/'
   fileRoutesById: FileRoutesById
 }
@@ -230,7 +242,7 @@ export interface RootRouteChildren {
   FavoritosRoute: typeof FavoritosRoute
   InboxRoute: typeof InboxRoute
   ProjetosRoute: typeof ProjetosRoute
-  ReunioesRoute: typeof ReunioesRoute
+  ReunioesRoute: typeof ReunioesRouteWithChildren
   SkillsRoute: typeof SkillsRoute
 }
 
@@ -341,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfiguracoesIndexRouteImport
       parentRoute: typeof ConfiguracoesRoute
     }
+    '/reunioes/$id': {
+      id: '/reunioes/$id'
+      path: '/$id'
+      fullPath: '/reunioes/$id'
+      preLoaderRoute: typeof ReunioesIdRouteImport
+      parentRoute: typeof ReunioesRoute
+    }
     '/configuracoes/providers': {
       id: '/configuracoes/providers'
       path: '/providers'
@@ -365,6 +384,18 @@ const ConfiguracoesRouteWithChildren = ConfiguracoesRoute._addFileChildren(
   ConfiguracoesRouteChildren,
 )
 
+interface ReunioesRouteChildren {
+  ReunioesIdRoute: typeof ReunioesIdRoute
+}
+
+const ReunioesRouteChildren: ReunioesRouteChildren = {
+  ReunioesIdRoute: ReunioesIdRoute,
+}
+
+const ReunioesRouteWithChildren = ReunioesRoute._addFileChildren(
+  ReunioesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaRoute: AgendaRoute,
@@ -378,7 +409,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritosRoute: FavoritosRoute,
   InboxRoute: InboxRoute,
   ProjetosRoute: ProjetosRoute,
-  ReunioesRoute: ReunioesRoute,
+  ReunioesRoute: ReunioesRouteWithChildren,
   SkillsRoute: SkillsRoute,
 }
 export const routeTree = rootRouteImport
