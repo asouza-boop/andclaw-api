@@ -97,25 +97,67 @@ export type Database = {
       }
       meetings: {
         Row: {
+          action_items: Json
+          alerts: Json
+          audio_url: string | null
           created_at: string
+          decisions: Json
+          duration_minutes: number | null
           id: string
+          ideas: Json
+          key_points: Json
+          knowledge_item_id: string | null
           occurred_at: string
+          participants: string[]
+          scheduled_at: string | null
+          skills: string[]
+          status: string
           summary: string | null
           title: string
+          transcript_text: string | null
+          updated_at: string
         }
         Insert: {
+          action_items?: Json
+          alerts?: Json
+          audio_url?: string | null
           created_at?: string
+          decisions?: Json
+          duration_minutes?: number | null
           id?: string
+          ideas?: Json
+          key_points?: Json
+          knowledge_item_id?: string | null
           occurred_at?: string
+          participants?: string[]
+          scheduled_at?: string | null
+          skills?: string[]
+          status?: string
           summary?: string | null
           title: string
+          transcript_text?: string | null
+          updated_at?: string
         }
         Update: {
+          action_items?: Json
+          alerts?: Json
+          audio_url?: string | null
           created_at?: string
+          decisions?: Json
+          duration_minutes?: number | null
           id?: string
+          ideas?: Json
+          key_points?: Json
+          knowledge_item_id?: string | null
           occurred_at?: string
+          participants?: string[]
+          scheduled_at?: string | null
+          skills?: string[]
+          status?: string
           summary?: string | null
           title?: string
+          transcript_text?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
