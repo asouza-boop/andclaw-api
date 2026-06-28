@@ -59,6 +59,16 @@ export const createMeeting = createServerFn({ method: "POST" })
     return row;
   });
 
+const ActionItemSchema = z.object({
+  title: z.string().min(1),
+  owner: z.string().nullable().optional(),
+  due: z.string().nullable().optional(),
+});
+const AlertSchema = z.object({
+  text: z.string().min(1),
+  severity: z.enum(["low", "medium", "high"]).default("medium"),
+});
+
 export const updateMeeting = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) =>
     z.object({
@@ -69,6 +79,11 @@ export const updateMeeting = createServerFn({ method: "POST" })
       summary: z.string().nullable().optional(),
       duration_minutes: z.number().int().positive().nullable().optional(),
       status: z.enum(["scheduled", "in_progress", "completed"]).optional(),
+      key_points: z.array(z.string()).optional(),
+      decisions: z.array(z.string()).optional(),
+      ideas: z.array(z.string()).optional(),
+      action_items: z.array(ActionItemSchema).optional(),
+      alerts: z.array(AlertSchema).optional(),
     }).parse(d),
   )
   .handler(async ({ data }) => {

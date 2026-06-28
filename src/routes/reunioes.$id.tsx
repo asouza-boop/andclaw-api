@@ -17,9 +17,10 @@ import {
   convertMeetingToKnowledge,
   updateMeeting,
 } from "@/lib/meetings.functions";
+import { IntelligenceEditor, type IntelligenceDraft } from "@/components/meetings/IntelligenceEditor";
 import {
   ArrowLeft, Upload, Mic, Square, FileText, Sparkles, Trash2, Loader2,
-  AlertTriangle, CheckSquare, Lightbulb, Gavel, BookOpen, Users, Clock, Plus,
+  Users, Clock, Plus, BookOpen,
 } from "lucide-react";
 
 export const Route = createFileRoute("/reunioes/$id")({
@@ -53,6 +54,10 @@ function MeetingDetail() {
   const transcribeMut = useMutation({ mutationFn: () => transcribe({ data: { id } }), onSuccess: refresh });
   const analyzeMut = useMutation({ mutationFn: () => analyze({ data: { id } }), onSuccess: refresh });
   const convertMut = useMutation({ mutationFn: () => convert({ data: { id } }), onSuccess: refresh });
+  const reviewMut = useMutation({
+    mutationFn: (next: IntelligenceDraft) => update({ data: { id, ...next } }),
+    onSuccess: refresh,
+  });
 
   // Recording state
   const [recording, setRecording] = useState(false);
@@ -187,63 +192,18 @@ function MeetingDetail() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="inteligencia" className="space-y-3">
-              {alerts.length > 0 && (
-                <Card>
-                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1"><AlertTriangle size={12} /> Alertas</h3>
-                  <ul className="space-y-2">
-                    {alerts.map((a, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <Badge className={
-                          a.severity === "high" ? "bg-destructive/20 text-destructive border-destructive/40" :
-                          a.severity === "medium" ? "bg-warning/15 text-warning border-warning/30" :
-                          "bg-muted text-muted-foreground"
-                        }>{a.severity}</Badge>
-                        <span>{a.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              )}
-              {actions.length > 0 && (
-                <Card>
-                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1"><CheckSquare size={12} /> Ações</h3>
-                  <ul className="space-y-2 text-sm">
-                    {actions.map((a, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <CheckSquare size={14} className="mt-0.5 text-primary" />
-                        <div>
-                          <p>{a.title}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {a.owner && <>@{a.owner}</>}{a.owner && a.due && " · "}{a.due}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              )}
-              {decisions.length > 0 && (
-                <Card>
-                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1"><Gavel size={12} /> Decisões</h3>
-                  <ul className="text-sm space-y-1.5">
-                    {decisions.map((d, i) => <li key={i} className="flex gap-2"><span className="text-cyan">•</span>{d}</li>)}
-                  </ul>
-                </Card>
-              )}
-              {ideas.length > 0 && (
-                <Card>
-                  <h3 className="text-xs uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1"><Lightbulb size={12} /> Ideias</h3>
-                  <ul className="text-sm space-y-1.5">
-                    {ideas.map((d, i) => <li key={i} className="flex gap-2"><span className="text-warning">•</span>{d}</li>)}
-                  </ul>
-                </Card>
-              )}
-              {alerts.length + actions.length + decisions.length + ideas.length === 0 && (
-                <Card className="text-sm text-muted-foreground">
-                  Sem inteligência ainda. Transcreva e analise para extrair ações, decisões, ideias e alertas.
-                </Card>
-              )}
+            <TabsContent value="inteligencia">
+              <IntelligenceEditor
+                initial={{
+                  key_points: keyPoints,
+                  decisions,
+                  ideas,
+                  action_items: actions,
+                  alerts,
+                }}
+                saving={reviewMut.isPending}
+                onSave={(next) => reviewMut.mutateAsync(next).then(() => undefined)}
+              />
             </TabsContent>
 
             <TabsContent value="skills">
