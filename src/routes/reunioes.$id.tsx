@@ -17,9 +17,10 @@ import {
   convertMeetingToKnowledge,
   updateMeeting,
 } from "@/lib/meetings.functions";
+import { IntelligenceEditor, type IntelligenceDraft } from "@/components/meetings/IntelligenceEditor";
 import {
   ArrowLeft, Upload, Mic, Square, FileText, Sparkles, Trash2, Loader2,
-  AlertTriangle, CheckSquare, Lightbulb, Gavel, BookOpen, Users, Clock, Plus,
+  Users, Clock, Plus, BookOpen,
 } from "lucide-react";
 
 export const Route = createFileRoute("/reunioes/$id")({
