@@ -54,6 +54,10 @@ function MeetingDetail() {
   const transcribeMut = useMutation({ mutationFn: () => transcribe({ data: { id } }), onSuccess: refresh });
   const analyzeMut = useMutation({ mutationFn: () => analyze({ data: { id } }), onSuccess: refresh });
   const convertMut = useMutation({ mutationFn: () => convert({ data: { id } }), onSuccess: refresh });
+  const reviewMut = useMutation({
+    mutationFn: (next: IntelligenceDraft) => update({ data: { id, ...next } }),
+    onSuccess: refresh,
+  });
 
   // Recording state
   const [recording, setRecording] = useState(false);
