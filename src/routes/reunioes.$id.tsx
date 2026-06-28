@@ -201,11 +201,8 @@ function MeetingDetail() {
                   action_items: actions,
                   alerts,
                 }}
-                saving={update.isPending ?? false ? true : false}
-                onSave={async (next: IntelligenceDraft) => {
-                  await update({ data: { id, ...next } });
-                  refresh();
-                }}
+                saving={reviewMut.isPending}
+                onSave={(next) => reviewMut.mutateAsync(next).then(() => undefined)}
               />
             </TabsContent>
 
